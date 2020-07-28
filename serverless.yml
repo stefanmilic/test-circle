@@ -19,7 +19,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
-  stage: ${opt:stage, 'dev'}
+  stage: prod
   endpointType: REGIONAL
   memorySize: 128
   timeout: 29
@@ -53,4 +53,4 @@ functions:
           method: ANY
       - http:
           method: ANY
-          path: '{proxy+}'
+          path: "{proxy+}"

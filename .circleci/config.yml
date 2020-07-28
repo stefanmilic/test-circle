@@ -45,8 +45,11 @@ jobs:
           name: Set AWS credentials
           command: ./node_modules/.bin/sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --overwrite
       - run:
-          name: Deploy on AWS
-          command: ./deploy.sh "$CIRCLE_BRANCH"
+          name: Decrypting security keys
+          command: ./node_modules/.bin/sls decrypt --stage $STAGE --password $ENCRYPT_PASS
+      - run:
+          name: Deploying new version of bug-bounty
+          command: ./node_modules/.bin/sls deploy --stage prod --config ./serverless.yml
 
 workflows:
   version: 2
@@ -72,10 +75,6 @@ workflows:
           filters:
             branches:
               only: /master/
-      - deployment-approval:
-          type: approval
-          requires:
-            - build-and-test
       - deploy:
           requires:
-            - deployment-approval
+            - build-and-test
