@@ -1,0 +1,14 @@
+
+# package directories
+node_modules
+jspm_packages
+
+# Serverless directories
+.serverless
+
+# dotenv environment variables file
+.env
+
+#the unencrypted secrets files
+secrets.dev.yml
+secrets.prod.yml
