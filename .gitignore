@@ -12,3 +12,4 @@ jspm_packages
 #the unencrypted secrets files
 secrets.dev.yml
 secrets.prod.yml
+.DS_Store
