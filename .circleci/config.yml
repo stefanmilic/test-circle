@@ -46,7 +46,7 @@ jobs:
           command: ./node_modules/.bin/sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --overwrite
       - run:
           name: Decrypting security keys
-          command: ./node_modules/.bin/sls decrypt --stage $STAGE --password $ENCRYPT_PASS
+          command: ./node_modules/.bin/sls decrypt --stage prod --password $ENCRYPT_PASS
       - run:
           name: Deploying new version of bug-bounty
           command: ./node_modules/.bin/sls deploy --stage prod --config ./serverless.yml
