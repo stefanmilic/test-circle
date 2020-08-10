@@ -14,4 +14,4 @@ workflows:
                 name: Run DeepCode CLI
                 command: |
                   cd <<parameters.wd>>
-                  deepcode analyze -sev <<parameters.severity>> -p <<parameters.files>> | tee results.json
+                  deepcode analyze -sev info -p <<parameters.files>> | tee results.json
