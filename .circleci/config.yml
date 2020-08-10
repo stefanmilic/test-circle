@@ -11,6 +11,7 @@ executors:
       - image: circleci/python:3.8
 orbs:
   node: circleci/node@1.1.6
+  utils: arrai/utils@1.5.0
 jobs:
   build-and-test:
     docker:
@@ -45,12 +46,7 @@ jobs:
     executor: python38
     steps:
       - checkout
-      - run:
-          name: Install python
-          command: sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
-      - run:
-          name: Install pip
-          command: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+
       - run:
           name: Install DeepCode CLI
           command: |
