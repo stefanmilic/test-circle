@@ -1,5 +1,7 @@
-# This code is licensed from CircleCI to the user under the MIT license. See
-# https://circleci.com/orbs/registry/licensing for details.
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
@@ -12,6 +14,36 @@ executors:
       - image: circleci/python:3.8
 
 jobs:
+  deepcode:
+    parameters:
+      wd:
+        type: string
+        default: ./${CIRCLE_PROJECT_REPONAME}
+      files:
+        type: string
+        default: "."
+      severity:
+        description: "Minimum severity level."
+        type: enum
+        enum: ["info", "warning", "critical"]
+        default: "info"
+    executor: python38
+    steps:
+      - checkout
+      - run:
+          name: Install DeepCode CLI
+          command: |
+            cd <<parameters.wd>>
+            python3 -m venv ${HOME}/.venv/
+            . ~/.venv/bin/activate
+            echo "source ${HOME}/.venv/bin/activate" >> $BASH_ENV
+            pip install deepcode
+      - run:
+          name: Run DeepCode CLI
+          command: |
+            cd <<parameters.wd>>
+            deepcode analyze -sev critical -p <<parameters.files>> | tee results.json
+
   build-and-test:
     docker:
       - image: circleci/node:12
@@ -43,36 +75,6 @@ jobs:
           name: Unit tests
           command: npm test
 
-  deepcode:
-    parameters:
-      wd:
-        type: string
-        default: ./${CIRCLE_PROJECT_REPONAME}
-      files:
-        type: string
-        default: "."
-      severity:
-        description: "Minimum severity level."
-        type: enum
-        enum: ["info", "warning", "critical"]
-        default: "info"
-    executor: python38
-    steps:
-      - checkout
-      - run:
-          name: Install DeepCode CLI
-          command: |
-            cd <<parameters.wd>>
-            python3 -m venv ${HOME}/.venv/
-            . ~/.venv/bin/activate
-            echo "source ${HOME}/.venv/bin/activate" >> $BASH_ENV
-            pip install deepcode
-      - run:
-          name: Run DeepCode CLI
-          command: |
-            cd <<parameters.wd>>
-            deepcode analyze -sev critical -p <<parameters.files>> | tee results.json
-
   deploy:
     docker:
       - image: circleci/node:12
@@ -90,10 +92,39 @@ jobs:
           command: ./deploy.sh "$CIRCLE_BRANCH"
 
 workflows:
+  version: 2
   dev-build:
     jobs:
       - deepcode:
           files: "."
           wd: "."
-      - build-and-test
-      - deploy
+          filters:
+            branches:
+              ignore: /(^develop$)|(^master$)/
+      - build-and-test:
+          filters:
+            branches:
+              ignore: /(^develop$)|(^master$)/
+  dev-deploy:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              only: /develop/
+      - deploy:
+          requires:
+            - build-and-test
+
+  prod-deploy:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              only: /master/
+      - deployment-approval:
+          type: approval
+          requires:
+            - build-and-test
+      - deploy:
+          requires:
+            - deployment-approval
