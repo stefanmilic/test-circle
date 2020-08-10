@@ -45,4 +45,5 @@ workflows:
   test:
     jobs:
       - deepcode:
-          context: arrai-global
+          files: "."
+          wd: "."
