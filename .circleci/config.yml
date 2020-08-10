@@ -24,7 +24,6 @@ jobs:
     executor: python38
     steps:
       - checkout
-      - utils/add_ssh_config
       - run:
           name: Install DeepCode CLI
           command: |
