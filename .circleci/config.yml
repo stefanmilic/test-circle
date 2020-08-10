@@ -107,12 +107,6 @@ workflows:
               ignore: /(^develop$)|(^master$)/
   dev-deploy:
     jobs:
-      - deepcode:
-          files: "."
-          wd: "."
-        filters:
-          branches:
-            only: /develop/
       - build-and-test:
           filters:
             branches:
@@ -124,12 +118,6 @@ workflows:
 
   prod-deploy:
     jobs:
-      - deepcode:
-          files: "."
-          wd: "."
-        filters:
-          branches:
-            only: /master/
       - build-and-test:
           filters:
             branches:
