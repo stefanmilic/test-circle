@@ -6,6 +6,37 @@ executors:
     docker:
       - image: circleci/python:3.8
 jobs:
+  build-and-test:
+    docker:
+      - image: circleci/node:12
+
+    working_directory: ~/repo
+
+    environment:
+      BASH_ENV: bash_env
+
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Unit tests
+          command: npm test
+
   deepcode:
     executor: python38
     steps:
@@ -26,6 +57,12 @@ jobs:
 
 workflows:
   version: 2
+  dev-build:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              ignore: /(^develop$)|(^master$)/
   test:
     jobs:
       - deepcode:
