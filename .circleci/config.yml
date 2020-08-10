@@ -3,6 +3,12 @@
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
 version: 2.1
+executors:
+  python38:
+    environment:
+      LANG: C.UTF-8
+    docker:
+      - image: circleci/python:3.8
 orbs:
   node: circleci/node@1.1.6
 jobs:
@@ -35,8 +41,27 @@ jobs:
           name: Unit tests
           command: npm test
 
+  deepcode:
+    executor: python38
+    steps:
+      - checkout
+      - run:
+          name: Install DeepCode CLI
+          command: |
+            cd ./${CIRCLE_PROJECT_REPONAME}
+            python3 -m venv ${HOME}/.venv/
+            . ~/.venv/bin/activate
+            echo "source ${HOME}/.venv/bin/activate" >> $BASH_ENV
+            pip install deepcode
+      - run:
+          name: Run DeepCode CLI
+          command: |
+            cd ./${CIRCLE_PROJECT_REPONAME}
+            deepcode analyze -txt -p .
+
 workflows:
   version: 2
   dev-build:
     jobs:
       - build-and-test
+      - deepcode
