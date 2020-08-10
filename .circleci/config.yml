@@ -5,13 +5,14 @@ workflows:
   test:
     jobs:
       - deepcode/deepcode:
-          name: deepcode
-          context: arrai-global
-          files: "."
-          wd: "."
-          steps:
-            - run:
-                name: Run DeepCode CLI
-                command: |
-                  cd <<parameters.wd>>
-                  deepcode analyze -sev info -p <<parameters.files>> | tee results.json
+          parameters:
+            name: deepcode
+            context: arrai-global
+            files: "."
+            wd: "."
+            steps:
+              - run:
+                  name: Run DeepCode CLI
+                  command: |
+                    cd <<parameters.wd>>
+                    deepcode analyze -sev info -p <<parameters.files>> | tee results.json
