@@ -116,6 +116,7 @@ workflows:
               only: /develop/
       - deploy:
           requires:
+            - deepcode
             - build-and-test
 
   prod-deploy:
@@ -133,6 +134,7 @@ workflows:
       - deployment-approval:
           type: approval
           requires:
+            - deepcode
             - build-and-test
       - deploy:
           requires:
