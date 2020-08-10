@@ -7,6 +7,18 @@ workflows:
       - deepcode/deepcode:
           name: deepcode
           context: arrai-global
+        parameters:
+          wd:
+            type: string
+            default: ./${CIRCLE_PROJECT_REPONAME}
+          files:
+            type: string
+            default: "."
+          severity:
+            description: "Minimum severity level."
+            type: enum
+            enum: ["info", "warning", "critical"]
+            default: "info"
           steps:
             - run:
                 name: Run DeepCode CLI
