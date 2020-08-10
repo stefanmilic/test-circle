@@ -46,6 +46,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install python
+          command: sudo apt-get update && sudo apt-get install -qq -y python-pip libpython-dev
+      - run:
+          name: Install pip
+          command: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+      - run:
           name: Install DeepCode CLI
           command: |
             cd ./${CIRCLE_PROJECT_REPONAME}
