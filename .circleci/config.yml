@@ -1,12 +1,10 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
-executors:
-  python38:
-    environment:
-      LANG: C.UTF-8
-    docker:
-      - image: circleci/python:3.8
 jobs:
   build-and-test:
     docker:
@@ -39,23 +37,21 @@ jobs:
           name: Unit tests
           command: npm test
 
-  deepcode:
-    executor: python38
+  deploy:
+    docker:
+      - image: circleci/node:12
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: Install DeepCode CLI
-          command: |
-            cd ./${CIRCLE_PROJECT_REPONAME}
-            python3 -m venv ${HOME}/.venv/
-            . ~/.venv/bin/activate
-            echo "source ${HOME}/.venv/bin/activate" >> $BASH_ENV
-            pip install deepcode
+          name: Install dependencies
+          command: npm install
       - run:
-          name: Run DeepCode CLI
-          command: |
-            cd ./${CIRCLE_PROJECT_REPONAME}
-            deepcode analyze -txt -p .
+          name: Set AWS credentials
+          command: ./node_modules/.bin/sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --overwrite
+      - run:
+          name: Deploy on AWS
+          command: ./deploy.sh "$CIRCLE_BRANCH"
 
 workflows:
   version: 2
@@ -65,9 +61,26 @@ workflows:
           filters:
             branches:
               ignore: /(^develop$)|(^master$)/
-  test:
+  dev-deploy:
     jobs:
-      - deepcode:
+      - build-and-test:
           filters:
             branches:
-              ignore: /(^develop$)|(^master$)/
+              only: /develop/
+      - deploy:
+          requires:
+            - build-and-test
+
+  prod-deploy:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              only: /master/
+      - deployment-approval:
+          type: approval
+          requires:
+            - build-and-test
+      - deploy:
+          requires:
+            - deployment-approval
