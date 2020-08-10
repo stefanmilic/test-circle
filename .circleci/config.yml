@@ -42,7 +42,7 @@ jobs:
           name: Run DeepCode CLI
           command: |
             cd <<parameters.wd>>
-            deepcode analyze -sev critical -p <<parameters.files>> | tee results.json
+            deepcode analyze -sev warning|critical -p <<parameters.files>> | tee results.json
       - run:
           name: Determine issue severity
           command: |
