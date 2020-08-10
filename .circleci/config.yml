@@ -37,22 +37,6 @@ jobs:
           name: Unit tests
           command: npm test
 
-  deploy:
-    docker:
-      - image: circleci/node:12
-    working_directory: ~/repo
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: npm install
-      - run:
-          name: Set AWS credentials
-          command: ./node_modules/.bin/sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --overwrite
-      - run:
-          name: Deploy on AWS
-          command: ./deploy.sh "$CIRCLE_BRANCH"
-
 workflows:
   version: 2
   dev-build:
@@ -61,26 +45,3 @@ workflows:
           filters:
             branches:
               ignore: /(^develop$)|(^master$)/
-  dev-deploy:
-    jobs:
-      - build-and-test:
-          filters:
-            branches:
-              only: /develop/
-      - deploy:
-          requires:
-            - build-and-test
-
-  prod-deploy:
-    jobs:
-      - build-and-test:
-          filters:
-            branches:
-              only: /master/
-      - deployment-approval:
-          type: approval
-          requires:
-            - build-and-test
-      - deploy:
-          requires:
-            - deployment-approval
