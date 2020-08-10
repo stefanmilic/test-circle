@@ -78,6 +78,10 @@ jobs:
           when: always
 
 workflows:
-  build_and_test:
+  test:
     jobs:
-      - deepcode
+      - deepcode:
+          name: deepcode
+          context: arrai-global
+          files: "."
+          wd: "."
