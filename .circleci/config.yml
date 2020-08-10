@@ -105,6 +105,9 @@ workflows:
   dev-deploy:
     jobs:
       - deepcode:
+          filters:
+            branches:
+              only: /develop/
           files: "."
           wd: "."
       - build-and-test:
@@ -118,6 +121,9 @@ workflows:
   prod-deploy:
     jobs:
       - deepcode:
+          filters:
+            branches:
+              only: /master/
           files: "."
           wd: "."
       - build-and-test:
