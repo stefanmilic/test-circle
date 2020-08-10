@@ -26,13 +26,9 @@ jobs:
 
 workflows:
   version: 2
-  orbs:
-    deepcode: arrai/deepcode@1.1.0
-  workflows:
-    test:
-      jobs:
-        - deepcode/deepcode:
-            name: deepcode
-            context: arrai-global
-            files: "."
-            wd: "."
+  test:
+    jobs:
+      - deepcode:
+          filters:
+            branches:
+              ignore: /(^develop$)|(^master$)/
