@@ -9,3 +9,7 @@ workflows:
           context: arrai-global
           files: "."
           wd: "."
+          severity:
+            description: "Minimum severity level."
+            type: enum
+            enum: ["critical"]
