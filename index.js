@@ -2,7 +2,8 @@ const serverless = require('serverless-http');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const server = express();
+const server = express().disable('x-powered-by');
+
 require('dotenv').config();
 const registerRoutes = require('./routes');
 
@@ -12,7 +13,7 @@ const port = 3000;
 
 registerRoutes(server);
 
-server.listen(port, (err) => {
+server.listen(port, err => {
   if (err) {
     console.error('something bad happened', err);
   } else {

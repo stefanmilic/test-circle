@@ -44,6 +44,13 @@ jobs:
             cd <<parameters.wd>>
             deepcode analyze -sev critical -p <<parameters.files>> | tee results.json
 
+  sonarCloud:
+    docker:
+      - image: "node:latest"
+    steps:
+      - checkout
+      - sonarcloud/scan
+
   build-and-test:
     docker:
       - image: circleci/node:12
@@ -101,6 +108,11 @@ workflows:
               ignore: /(^develop$)|(^master$)/
           files: "."
           wd: "."
+      - sonarCloud:
+          filters:
+            branches:
+              ignore: /(^develop$)|(^master$)/
+          context: sonarcloud
       - build-and-test:
           filters:
             branches:
@@ -113,6 +125,11 @@ workflows:
               only: /develop/
           files: "."
           wd: "."
+      - sonarCloud:
+          filters:
+            branches:
+              only: /develop/
+          context: sonarcloud
       - build-and-test:
           filters:
             branches:
