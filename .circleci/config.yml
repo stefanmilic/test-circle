@@ -7,10 +7,11 @@ workflows:
       - deepcode/deepcode:
           name: deepcode
           context: arrai-global
-          files:
-            type: string
-            default: "."
-          severity:
-            description: "Minimum severity level."
-            type: string
-            default: "critical"
+          files: "."
+          wd: "."
+          steps:
+            - run:
+                name: Run DeepCode CLI
+                command: |
+                  cd <<parameters.wd>>
+                  deepcode analyze -sev <<parameters.severity>> -p <<parameters.files>> | tee results.json
