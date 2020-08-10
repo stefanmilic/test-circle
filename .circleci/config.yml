@@ -11,7 +11,6 @@ executors:
       - image: circleci/python:3.8
 orbs:
   node: circleci/node@1.1.6
-  deepcode: arrai/deepcode@1.1.0
 jobs:
   build-and-test:
     docker:
@@ -40,6 +39,24 @@ jobs:
       - run:
           name: Unit tests
           command: npm test
+
+  deepcode:
+    executor: python38
+    steps:
+      - checkout
+      - run:
+          name: Install DeepCode CLI
+          command: |
+            cd ./${CIRCLE_PROJECT_REPONAME}
+            python3 -m venv ${HOME}/.venv/
+            . ~/.venv/bin/activate
+            echo "source ${HOME}/.venv/bin/activate" >> $BASH_ENV
+            pip install deepcode
+      - run:
+          name: Run DeepCode CLI
+          command: |
+            cd ./${CIRCLE_PROJECT_REPONAME}
+            deepcode analyze -txt -p .
 
 workflows:
   version: 2
