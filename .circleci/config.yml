@@ -1,8 +1,6 @@
 # This code is licensed from CircleCI to the user under the MIT license. See
 # https://circleci.com/orbs/registry/licensing for details.
 version: 2.1
-orbs:
-  utils: arrai/utils@1.5.0
 executors:
   python38:
     environment:
