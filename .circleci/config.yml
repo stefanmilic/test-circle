@@ -39,13 +39,10 @@ jobs:
           name: Run DeepCode CLI
           command: |
             cd <<parameters.wd>>
-            deepcode analyze -sev critical -p <<parameters.files>> | tee results.json
+            deepcode analyze -sev warning -p <<parameters.files>> | tee results.json
 
 workflows:
   test:
     jobs:
       - deepcode:
-          name: deepcode
           context: arrai-global
-          files: "."
-          wd: "."
