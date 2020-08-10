@@ -1,0 +1,30 @@
+{
+  "local": {
+    "deletionPolicy": "Delete",
+    "host": "http://localhost:3000"
+  },
+  "dev": {
+    "deletionPolicy": "Delete",
+    "oktaClientId": "0oa3sht7ijnZgWyAS0i7",
+    "oktaClientSecret": "2iRulV6iQ1M6Qy2tOmcgkgmi80YBsgZyXr_42_we",
+    "oktaCallbackUrl": "https://security-dev.tx.group/openid/callback",
+    "jwtSecret": "9f2ffebe-141a-40cf-8897-637fbbff1908",
+    "googleClientId": "834129328485-pklhat06q87l7nrthdj5irpdv35ar5d6.apps.googleusercontent.com",
+    "googleClientSecret": "p_GxMXewR86jZMRU9IBzIoRl",
+    "googleCallbackUrl": "https://security-dev.tx.group/auth/success",
+    "host": "https://security-dev.tx.group",
+    "slackHookUrl": "https://hooks.slack.com/services/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"
+  },
+  "prod": {
+    "deletionPolicy": "Retain",
+    "oktaClientId": "0oa2n27zviVvBk01n0i7",
+    "oktaClientSecret": "4ceS4frJUNitGqViNgvBxsSRiWqml1o8jYz2wh95",
+    "oktaCallbackUrl": "https://security.tx.group/openid/callback",
+    "jwtSecret": "e5e60851-f90e-4006-a4fa-1ecf70642087",
+    "googleClientId": "834129328485-pklhat06q87l7nrthdj5irpdv35ar5d6.apps.googleusercontent.com",
+    "googleClientSecret": "p_GxMXewR86jZMRU9IBzIoRl",
+    "googleCallbackUrl": "https://security.tx.group/auth/success",
+    "host": "https://security.tx.group",
+    "slackHookUrl": "https://hooks.slack.com/services/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"
+  }
+}

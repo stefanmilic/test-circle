@@ -41,10 +41,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies and ./serverless.yml
+          name: Install Serverless CLI and dependencies
           command: |
+            sudo npm i -g serverless
             npm install
-            sudo npm install -g serverless
       - run:
           name: Set AWS credentials
           command: ./node_modules/.bin/sls config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY --overwrite
