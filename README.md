@@ -1,6 +1,6 @@
-# bug-bounty
-
 [![deepcode](https://www.deepcode.ai/api/gh/badge?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwbGF0Zm9ybTEiOiJnaCIsIm93bmVyMSI6InN0ZWZhbm1pbGljIiwicmVwbzEiOiJ0ZXN0LWNpcmNsZSIsImluY2x1ZGVMaW50IjpmYWxzZSwiYXV0aG9ySWQiOjIxNTA0LCJpYXQiOjE1OTcwNDQ1ODJ9.yNpu1AbWzIGmHozL7jwy_xQcmZL4fcjBzHcBBSQU8ZI)](https://www.deepcode.ai/app/gh/stefanmilic/test-circle/_/dashboard?utm_content=gh%2Fstefanmilic%2Ftest-circle)
+
+# bug-bounty
 
 This AWS Lambda Function automatically submits findings from an automated scanner (detectify) to our Bug Bounty Program. Both, the automated scanner and the bug bounty program have a restful API. The function should be triggered by webhook and then fetch the findings from the automated scanner and submit the via API to the bug bounty program.
 
