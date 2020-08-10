@@ -7,12 +7,9 @@ workflows:
       - deepcode/deepcode:
           name: deepcode
           context: arrai-global
-          parameters:
-            files: "."
-            wd: "."
-            steps:
-              - run:
-                  name: Run DeepCode CLI
-                  command: |
-                    cd <<parameters.wd>>
-                    deepcode analyze -sev info -p <<parameters.files>> | tee results.json
+          steps:
+            - run:
+                name: Run DeepCode CLI
+                command: |
+                  cd <<parameters.wd>>
+                  deepcode analyze -sev info -p <<parameters.files>> | tee results.json
