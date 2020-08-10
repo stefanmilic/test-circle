@@ -34,3 +34,9 @@ jobs:
       - run:
           name: Unit tests
           command: npm test
+
+workflows:
+  version: 2
+  dev-build:
+    jobs:
+      - build-and-test
