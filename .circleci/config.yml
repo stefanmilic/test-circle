@@ -17,8 +17,6 @@ jobs:
 
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
 
       # Download and cache dependencies
       - restore_cache:
@@ -36,12 +34,3 @@ jobs:
       - run:
           name: Unit tests
           command: npm test
-
-workflows:
-  version: 2
-  dev-build:
-    jobs:
-      - build-and-test:
-          filters:
-            branches:
-              ignore: /(^develop$)|(^master$)/
