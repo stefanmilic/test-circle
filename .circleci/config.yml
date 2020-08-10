@@ -98,9 +98,6 @@ workflows:
       - deepcode:
           files: "."
           wd: "."
-          filters:
-            branches:
-              ignore: /(^develop$)|(^master$)/
       - build-and-test:
           filters:
             branches:
