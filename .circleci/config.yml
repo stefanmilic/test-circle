@@ -5,9 +5,9 @@ workflows:
   test:
     jobs:
       - deepcode/deepcode:
+          name: deepcode
+          context: arrai-global
           parameters:
-            name: deepcode
-            context: arrai-global
             files: "."
             wd: "."
             steps:
