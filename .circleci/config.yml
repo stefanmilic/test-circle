@@ -11,7 +11,7 @@ executors:
       - image: circleci/python:3.8
 orbs:
   node: circleci/node@1.1.6
-  deepcode: arrai/deepcode@1.1.0
+
 jobs:
   build-and-test:
     docker:
@@ -63,8 +63,7 @@ workflows:
   version: 2
   dev-build:
     jobs:
-      - deepcode/deepcode:
-          name: deepcode
-          context: arrai-global
-          files: "."
-          wd: "."
+      - deepcode:
+          filters:
+            branches:
+              ignore: /(^develop$)|(^master$)/
