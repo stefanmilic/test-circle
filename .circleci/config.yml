@@ -12,4 +12,5 @@ workflows:
           severity:
             description: "Minimum severity level."
             type: enum
-            enum: ["critical"]
+            enum: ["info", "warning", "critical"]
+            default: "critical"
