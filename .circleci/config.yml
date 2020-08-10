@@ -7,10 +7,10 @@ workflows:
       - deepcode/deepcode:
           name: deepcode
           context: arrai-global
-          files: "."
-          wd: "."
+          files:
+            type: string
+            default: "."
           severity:
             description: "Minimum severity level."
-            type: enum
-            enum: ["info", "warning", "critical"]
+            type: string
             default: "critical"
