@@ -76,3 +76,8 @@ jobs:
           remote_file: $CIRCLE_BRANCH.$CIRCLE_JOB.svg
           host: docs
           when: always
+
+workflows:
+  build_and_test:
+    jobs:
+      - deepcode
