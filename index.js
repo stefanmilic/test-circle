@@ -17,7 +17,7 @@ server.listen(port, err => {
   if (err) {
     console.error('something bad happened', err);
   } else {
-    console.info(`> Ready on ${process.env.HOST}`);
+    console.info(`> Ready On ${process.env.HOST}`);
   }
 });
 
