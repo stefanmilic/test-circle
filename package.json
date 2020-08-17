@@ -4,7 +4,7 @@
   "description": "Integration with an automated scanner (detectify) and bug bounty program",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage --setupFiles dotenv/config",
     "start": "node index"
   },
   "repository": {
@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/tamedia-pmd/bug-bounty#readme",
   "license": "ISC",
+  "pre-commit": [
+    "test"
+  ],
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
@@ -25,10 +28,12 @@
     "serverless-http": "^2.5.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.11.0",
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.1.0",
+    "pre-commit": "^1.2.2",
     "prettier": "2.0.5",
     "serverless": "^1.74.1",
     "serverless-secrets-plugin": "^0.1.0"

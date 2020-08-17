@@ -13,3 +13,5 @@ jspm_packages
 secrets.dev.yml
 secrets.prod.yml
 .DS_Store
+
+coverage
