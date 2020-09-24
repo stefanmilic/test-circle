@@ -84,18 +84,17 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/node:12
+      - image: circleci/python:3.8
     working_directory: ~/repo
     steps:
       - checkout
-      - run:
-          name: Install python
-          command: |
-            sudo apt-get update && sudo apt-get install python
-            python3 ––version
-      - run:
-          name: Install pip
-          command: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
+      # - run:
+      #     name: Install python
+      #     command: |
+      #       sudo apt-get update && sudo apt-get install python
+      # - run:
+      #     name: Install pip
+      #     command: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
       - run:
           name: Install aws cli
           command: sudo pip install -q awscli --upgrade
