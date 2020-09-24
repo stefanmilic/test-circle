@@ -84,14 +84,14 @@ jobs:
 
   deploy:
     docker:
-      - image: circleci/python:3.8
+      - image: circleci/node:12
     working_directory: ~/repo
     steps:
       - checkout
-      # - run:
-      #     name: Install python
-      #     command: |
-      #       sudo apt-get update && sudo apt-get install python
+      - run:
+          name: Install python
+          command: |
+            sudo apt-get update && sudo apt-get install python
       # - run:
       #     name: Install pip
       #     command: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
