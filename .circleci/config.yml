@@ -143,10 +143,7 @@ workflows:
       #     filters:
       #       branches:
       #         only: /develop/
-      - deploy:
-          requires:
-            - deepcode
-            - build-and-test
+      - deploy
 
   prod-deploy:
     jobs:
