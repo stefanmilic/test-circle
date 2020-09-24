@@ -90,7 +90,9 @@ jobs:
       - checkout
       - run:
           name: Install python
-          command: sudo apt-get update && sudo apt-get install python
+          command: |
+            sudo apt-get update && sudo apt-get install python
+            python ––version
       - run:
           name: Install pip
           command: curl -O https://bootstrap.pypa.io/get-pip.py && sudo python get-pip.py
