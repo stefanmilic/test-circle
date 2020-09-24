@@ -128,21 +128,21 @@ workflows:
               ignore: /(^develop$)|(^master$)/
   dev-deploy:
     jobs:
-      - deepcode:
-          filters:
-            branches:
-              only: /develop/
-          files: "."
-          wd: "."
-      - sonarCloud:
-          filters:
-            branches:
-              only: /develop/
-          context: sonarcloud
-      - build-and-test:
-          filters:
-            branches:
-              only: /develop/
+      # - deepcode:
+      #     filters:
+      #       branches:
+      #         only: /develop/
+      #     files: "."
+      #     wd: "."
+      # - sonarCloud:
+      #     filters:
+      #       branches:
+      #         only: /develop/
+      #     context: sonarcloud
+      # - build-and-test:
+      #     filters:
+      #       branches:
+      #         only: /develop/
       - deploy:
           requires:
             - deepcode
