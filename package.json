@@ -30,7 +30,7 @@
     "eslint-plugin-import": "^2.22.0",
     "jest": "^26.1.0",
     "prettier": "2.0.5",
-    "serverless": "^1.74.1",
+    "serverless": "^3.25.1",
     "serverless-secrets-plugin": "^0.1.0"
   }
 }
